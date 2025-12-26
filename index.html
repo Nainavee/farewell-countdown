@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Days Left to See You 💫</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="stars" id="stars"></div>
+
+    <div class="container">
+      <div class="card">
+        <div class="card-content">
+          <div class="header-title">Counting Down Together</div>
+          <h1>You Get To See Me For</h1>
+          <div class="countdown-number" id="countdown">0</div>
+          <div class="days-label">Days</div>
+          <div class="message" id="message">Making every moment count! 💫</div>
+          <div class="calendar-container">
+            <div class="calendar-header">
+              <button class="nav-button" id="prevBtn">‹</button>
+              <div class="month-name" id="monthName">December 2025</div>
+              <button class="nav-button" id="nextBtn">›</button>
+            </div>
+
+            <div class="calendar-wrapper">
+              <div class="calendar-slider" id="calendarSlider"></div>
+            </div>
+
+            <div class="legend">
+              <div class="legend-item">
+                <div class="legend-box office"></div>
+                <span>Office Days</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-box weekend"></div>
+                <span>Weekends</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-box holiday"></div>
+                <span>Holidays</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-box wfh"></div>
+                <span>WFH</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-box leave"></div>
+                <span>Leave</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-box last-day"></div>
+                <span>Last Day</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="footer">Last day: January 30th, 2026</div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/main.js"></script>
+  </body>
+</html>

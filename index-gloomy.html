@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Days Left to See You ⛈️</title>
+    <style>
+      /* Theme Variables - Stormy Farewell */
+      :root {
+        --primary-gradient: linear-gradient(135deg, #4a4a4a 0%, #2a2a2a 100%);
+        --secondary-gradient: linear-gradient(135deg, #5a5a5a 0%, #3a3a3a 100%);
+        --bg-gradient: linear-gradient(
+          135deg,
+          #1a1a1a 0%,
+          #2d2d2d 25%,
+          #1f1f1f 50%,
+          #2a2a2a 75%,
+          #1a1a1a 100%
+        );
+        --card-bg: rgba(40, 40, 40, 0.7);
+        --card-border: rgba(100, 100, 100, 0.3);
+        --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+        --text-primary: #b8b8b8;
+        --text-secondary: #888888;
+        --text-muted: #5a5a5a;
+
+        --rain-color: rgba(180, 180, 200, 0.6);
+        --lightning-color: rgba(200, 200, 220, 0.9);
+        --cloud-color: rgba(60, 60, 70, 0.4);
+        --weekend-bg: rgba(70, 70, 70, 0.35);
+        --holiday-bg: rgba(80, 80, 80, 0.4);
+        --wfh-bg: rgba(60, 60, 70, 0.35);
+        --leave-bg: rgba(75, 75, 75, 0.35);
+        --office-bg: rgba(90, 90, 100, 0.3);
+        --past-bg: rgba(50, 50, 50, 0.25);
+        --last-day-bg: rgba(100, 100, 110, 0.45);
+
+        --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: var(--bg-gradient);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      /* Storm Background */
+      .storm-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+        overflow: hidden;
+      }
+
+      /* Dark Clouds */
+      .clouds {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+      }
+
+      .cloud {
+        position: absolute;
+        background: var(--cloud-color);
+        border-radius: 100px;
+        opacity: 0.6;
+        animation: driftCloud linear infinite;
+      }
+
+      .cloud::before,
+      .cloud::after {
+        content: "";
+        position: absolute;
+        background: var(--cloud-color);
+        border-radius: 100px;
+      }
+
+      .cloud.small {
+        width: 80px;
+        height: 30px;
+        top: 10%;
+        animation-duration: 35s;
+      }
+
+      .cloud.small::before {
+        width: 50px;
+        height: 40px;
+        top: -20px;
+        left: 10px;
+      }
+
+      .cloud.small::after {
+        width: 60px;
+        height: 35px;
+        top: -15px;
+        right: 10px;
+      }
+
+      .cloud.medium {
+        width: 120px;
+        height: 40px;
+        top: 20%;
+        animation-duration: 45s;
+      }
+
+      .cloud.medium::before {
+        width: 70px;
+        height: 50px;
+        top: -25px;
+        left: 15px;
+      }
+
+      .cloud.medium::after {
+        width: 80px;
+        height: 45px;
+        top: -20px;
+        right: 15px;
+      }
+
+      .cloud.large {
+        width: 160px;
+        height: 50px;
+        top: 5%;
+        animation-duration: 55s;
+      }
+
+      .cloud.large::before {
+        width: 90px;
+        height: 60px;
+        top: -30px;
+        left: 20px;
+      }
+
+      .cloud.large::after {
+        width: 100px;
+        height: 55px;
+        top: -25px;
+        right: 20px;
+      }
+
+      @keyframes driftCloud {
+        0% {
+          left: -20%;
+        }
+        100% {
+          left: 120%;
+        }
+      }
+
+      /* Rain */
+      .rain {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+      }
+
+      .raindrop {
+        position: absolute;
+        width: 2px;
+        height: 40px;
+        background: linear-gradient(
+          to bottom,
+          transparent,
+          var(--rain-color),
+          transparent
+        );
+        animation: fall linear infinite;
+        opacity: 0.7;
+      }
+
+      @keyframes fall {
+        0% {
+          transform: translateY(-100px);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.7;
+        }
+        90% {
+          opacity: 0.7;
+        }
+        100% {
+          transform: translateY(100vh);
+          opacity: 0;
+        }
+      }
+
+      /* Lightning */
+      .lightning {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        pointer-events: none;
+        z-index: 5;
+      }
+
+      .lightning.flash {
+        animation: lightningFlash 0.3s ease-out;
+      }
+
+      @keyframes lightningFlash {
+        0% {
+          opacity: 0;
+          background: transparent;
+        }
+        10% {
+          opacity: 0.8;
+          background: radial-gradient(
+            ellipse at 50% 20%,
+            rgba(200, 200, 220, 0.4),
+            transparent 60%
+          );
+        }
+        20% {
+          opacity: 0;
+        }
+        30% {
+          opacity: 1;
+          background: radial-gradient(
+            ellipse at 50% 20%,
+            rgba(200, 200, 220, 0.5),
+            transparent 60%
+          );
+        }
+        50% {
+          opacity: 0;
+        }
+      }
+
+      .lightning-bolt {
+        position: absolute;
+        width: 4px;
+        background: var(--lightning-color);
+        box-shadow: 0 0 10px var(--lightning-color),
+          0 0 20px var(--lightning-color);
+        opacity: 0;
+      }
+
+      .lightning-bolt.strike {
+        animation: boltStrike 0.3s ease-out;
+      }
+
+      @keyframes boltStrike {
+        0% {
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        30% {
+          opacity: 0;
+        }
+        40% {
+          opacity: 1;
+        }
+        60% {
+          opacity: 0;
+        }
+      }
+
+      .container {
+        position: relative;
+        z-index: 2;
+        max-width: 900px;
+        width: 100%;
+      }
+
+      .card {
+        background: var(--card-bg);
+        backdrop-filter: blur(20px);
+        border-radius: 30px;
+        padding: 50px 40px;
+        border: 1px solid var(--card-border);
+        box-shadow: var(--card-shadow);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .card::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(80, 80, 80, 0.1) 0%,
+          transparent 70%
+        );
+        animation: rotate 40s linear infinite;
+      }
+
+      @keyframes rotate {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .card-content {
+        position: relative;
+        z-index: 1;
+      }
+
+      .emoji-header {
+        font-size: 80px;
+        margin-bottom: 20px;
+        animation: sway 4s ease-in-out infinite;
+        filter: grayscale(80%);
+        opacity: 0.7;
+      }
+
+      @keyframes sway {
+        0%,
+        100% {
+          transform: translateY(0px) rotate(-2deg);
+        }
+        50% {
+          transform: translateY(-12px) rotate(2deg);
+        }
+      }
+
+      h1 {
+        font-size: 32px;
+        margin-bottom: 15px;
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-weight: 700;
+        letter-spacing: 1px;
+        opacity: 0.95;
+      }
+
+      .subtitle {
+        color: var(--text-secondary);
+        font-size: 16px;
+        margin-bottom: 40px;
+        opacity: 0.75;
+        font-style: italic;
+      }
+
+      .countdown-number {
+        font-size: 120px;
+        font-weight: 800;
+        background: var(--secondary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+        margin: 30px 0;
+        animation: dimPulse 4s ease-in-out infinite;
+      }
+
+      @keyframes dimPulse {
+        0%,
+        100% {
+          opacity: 0.7;
+          filter: brightness(0.9);
+        }
+        50% {
+          opacity: 0.95;
+          filter: brightness(1.1);
+        }
+      }
+
+      .days-label {
+        font-size: 24px;
+        color: var(--text-secondary);
+        font-weight: 600;
+        margin-bottom: 30px;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        opacity: 0.8;
+      }
+
+      .message {
+        font-size: 18px;
+        color: var(--text-primary);
+        margin: 30px 0;
+        padding: 20px;
+        background: rgba(50, 50, 50, 0.5);
+        border-radius: 15px;
+        border: 1px solid rgba(100, 100, 100, 0.3);
+        font-style: italic;
+        opacity: 0.9;
+      }
+
+      .nav-button {
+        background: rgba(70, 70, 70, 0.5);
+        border: 1px solid rgba(110, 110, 110, 0.4);
+        color: var(--text-primary);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        transition: var(--transition-smooth);
+      }
+
+      .nav-button:hover {
+        background: rgba(90, 90, 90, 0.6);
+        transform: scale(1.05);
+      }
+
+      .nav-button:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+      }
+
+      .nav-button:disabled:hover {
+        transform: scale(1);
+      }
+
+      .calendar-container {
+        margin-top: 20px;
+        padding: 10px;
+        border-radius: 14px;
+        font-size: 14px;
+        background: rgba(30, 30, 30, 0.6);
+        border: 1px solid rgba(90, 90, 90, 0.3);
+        position: relative;
+        overflow-x: auto;
+      }
+
+      .calendar-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 15px;
+      }
+
+      .month-name {
+        font-size: 18px;
+        color: var(--text-primary);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        flex: 1;
+        text-align: center;
+        opacity: 0.9;
+      }
+
+      .calendar-wrapper {
+        overflow: hidden;
+        position: relative;
+      }
+
+      .calendar-slider {
+        display: flex;
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .calendar-slide {
+        min-width: 100%;
+        flex-shrink: 0;
+      }
+
+      .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 3px;
+        margin-bottom: 30px;
+      }
+
+      .day-header {
+        color: var(--text-muted);
+        font-size: 10px;
+        font-weight: 600;
+        padding: 6px 2px;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .day-cell {
+        aspect-ratio: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text-primary);
+        position: relative;
+        transition: var(--transition-smooth);
+        cursor: pointer;
+        border: 2px solid transparent;
+        min-width: 32px;
+        min-height: 32px;
+        padding: 0;
+      }
+
+      .day-cell:hover:not(.empty):not(.past) {
+        transform: scale(1.08);
+        z-index: 10;
+        filter: brightness(1.3);
+      }
+
+      .day-number {
+        position: relative;
+        z-index: 2;
+      }
+
+      .day-cell.empty {
+        background: transparent;
+      }
+
+      .day-cell.past {
+        background: var(--past-bg);
+        color: var(--text-muted);
+        opacity: 0.45;
+      }
+
+      .day-cell.past .day-number::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: -20%;
+        right: -20%;
+        height: 2px;
+        background: var(--text-muted);
+        transform: translateY(-50%) rotate(-15deg);
+        opacity: 0.7;
+      }
+
+      .day-cell.today {
+        border: 2px solid rgba(140, 140, 150, 0.7);
+        box-shadow: 0 0 15px rgba(120, 120, 130, 0.5);
+        animation: todayPulse 3s infinite;
+      }
+
+      @keyframes todayPulse {
+        0%,
+        100% {
+          box-shadow: 0 0 15px rgba(120, 120, 130, 0.4);
+        }
+        50% {
+          box-shadow: 0 0 22px rgba(120, 120, 130, 0.6);
+        }
+      }
+
+      .day-cell.weekend {
+        background: var(--weekend-bg);
+      }
+
+      .day-cell.holiday {
+        background: var(--holiday-bg);
+      }
+
+      .day-cell.wfh {
+        background: var(--wfh-bg);
+      }
+
+      .day-cell.leave {
+        background: var(--leave-bg);
+      }
+
+      .day-cell.office {
+        background: var(--office-bg);
+        border: 2px solid rgba(100, 100, 110, 0.4);
+      }
+
+      .day-cell.last-day {
+        background: var(--last-day-bg);
+        border: 2px solid rgba(130, 130, 140, 0.7);
+        animation: lastDayGlow 3s infinite;
+      }
+
+      @keyframes lastDayGlow {
+        0%,
+        100% {
+          box-shadow: 0 0 12px rgba(120, 120, 130, 0.5);
+        }
+        50% {
+          box-shadow: 0 0 20px rgba(120, 120, 130, 0.7);
+        }
+      }
+
+      .legend {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 6px;
+        margin-top: 12px;
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 11px;
+        color: var(--text-secondary);
+        opacity: 0.85;
+      }
+
+      .legend-box {
+        width: 14px;
+        height: 14px;
+        border-radius: 4px;
+        border: 1px solid rgba(110, 110, 110, 0.4);
+      }
+
+      .legend-box.office {
+        background: var(--office-bg);
+      }
+      .legend-box.weekend {
+        background: var(--weekend-bg);
+      }
+      .legend-box.holiday {
+        background: var(--holiday-bg);
+      }
+      .legend-box.wfh {
+        background: var(--wfh-bg);
+      }
+      .legend-box.leave {
+        background: var(--leave-bg);
+      }
+      .legend-box.last-day {
+        background: var(--last-day-bg);
+      }
+
+      .footer {
+        margin-top: 30px;
+        color: var(--text-muted);
+        font-size: 14px;
+        opacity: 0.7;
+        font-style: italic;
+      }
+
+      @media (min-width: 600px) {
+        .calendar-container {
+          padding: 30px;
+          border-radius: 20px;
+          font-size: 16px;
+        }
+        .calendar-header {
+          flex-direction: row;
+          gap: 0;
+          margin-bottom: 25px;
+          align-items: center;
+          justify-content: space-between;
+        }
+        .month-name {
+          font-size: 24px;
+        }
+        .calendar-grid {
+          gap: 8px;
+        }
+        .day-header {
+          font-size: 12px;
+          padding: 10px 5px;
+        }
+        .day-cell {
+          min-width: unset;
+          min-height: unset;
+          font-size: 14px;
+          border-radius: 12px;
+        }
+        .legend {
+          gap: 15px;
+          margin-top: 25px;
+        }
+        .legend-item {
+          font-size: 13px;
+          gap: 8px;
+        }
+        .legend-box {
+          width: 20px;
+          height: 20px;
+          border-radius: 6px;
+        }
+        .card {
+          padding: 50px 40px;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .countdown-number {
+          font-size: 80px;
+        }
+        h1 {
+          font-size: 24px;
+        }
+        .emoji-header {
+          font-size: 60px;
+        }
+        .calendar-grid {
+          gap: 5px;
+        }
+        .day-cell {
+          font-size: 12px;
+        }
+        .legend {
+          gap: 10px;
+        }
+        .legend-item {
+          font-size: 11px;
+        }
+        .card {
+          padding: 30px 20px;
+        }
+        .calendar-container {
+          padding: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="storm-container" id="stormContainer">
+      <div class="clouds" id="clouds"></div>
+      <div class="rain" id="rain"></div>
+      <div class="lightning" id="lightning"></div>
+    </div>
+
+    <div class="container">
+      <div class="card">
+        <div class="card-content">
+          <div class="emoji-header">👋⛈️</div>
+          <h1>You Get To See Me For</h1>
+          <p class="subtitle">office days remaining before farewell</p>
+
+          <div class="countdown-number" id="countdown">0</div>
+          <div class="days-label">Days</div>
+
+          <div class="message" id="message">Making every moment count...</div>
+
+          <div class="calendar-container">
+            <div class="calendar-header">
+              <button class="nav-button" id="prevBtn">‹</button>
+              <div class="month-name" id="monthName">December 2025</div>
+              <button class="nav-button" id="nextBtn">›</button>
+            </div>
+
+            <div class="calendar-wrapper">
+              <div class="calendar-slider" id="calendarSlider"></div>
+            </div>
+
+            <div class="legend">
+              <div class="legend-item">
+                <div class="legend-box office"></div>
+                <span>Office Days</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-box weekend"></div>
+                <span>Weekends</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-box holiday"></div>
+                <span>Holidays</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-box wfh"></div>
+                <span>WFH</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-box leave"></div>
+                <span>Leave</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-box last-day"></div>
+                <span>Last Day</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="footer">Last day: January 30th, 2026 ⛈️</div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Create clouds
+      const cloudsContainer = document.getElementById("clouds");
+      const cloudTypes = ["small", "medium", "large"];
+      const cloudCount = 8;
+
+      for (let i = 0; i < cloudCount; i++) {
+        const cloud = document.createElement("div");
+        cloud.className = `cloud ${
+          cloudTypes[Math.floor(Math.random() * cloudTypes.length)]
+        }`;
+        cloud.style.left = Math.random() * 120 - 20 + "%";
+        cloud.style.animationDelay = Math.random() * 10 + "s";
+        cloudsContainer.appendChild(cloud);
+      }
+
+      // Create rain
+      const rainContainer = document.getElementById("rain");
+      for (let i = 0; i < 150; i++) {
+        const raindrop = document.createElement("div");
+        raindrop.className = "raindrop";
+        raindrop.style.left = Math.random() * 100 + "%";
+        raindrop.style.animationDuration = Math.random() * 0.5 + 0.8 + "s";
+        raindrop.style.animationDelay = Math.random() * 2 + "s";
+        raindrop.style.opacity = Math.random() * 0.5 + 0.3;
+        rainContainer.appendChild(raindrop);
+      }
+
+      // Lightning effect
+      const lightningEl = document.getElementById("lightning");
+      function createLightning() {
+        lightningEl.classList.add("flash");
+        setTimeout(() => {
+          lightningEl.classList.remove("flash");
+        }, 300);
+      }
+
+      // Random lightning strikes
+      function randomLightning() {
+        createLightning();
+        const nextStrike = Math.random() * 8000 + 5000; // 5-13 seconds
+        setTimeout(randomLightning, nextStrike);
+      }
+      setTimeout(randomLightning, 3000);
+
+      // Calendar data
+      const today = new Date("2025-12-26");
+      const holidays = new Set(["2026-01-01", "2026-01-14", "2026-01-26"]);
+      const wfhDays = new Set([
+        "2026-01-22",
+        "2026-01-23",
+        "2026-01-27",
+        "2026-01-28",
+        "2026-01-29",
+      ]);
+      const leaveDays = new Set(["2026-01-02", "2026-01-05", "2026-01-21"]);
+      const lastDayDate = "2026-01-30";
+
+      const months = [
+        { year: 2025, month: 11, name: "December 2025", days: 31, startDay: 1 },
+        { year: 2026, month: 0, name: "January 2026", days: 31, startDay: 4 },
+        { year: 2026, month: 1, name: "February 2026", days: 28, startDay: 0 },
+      ];
+
+      let currentMonthIndex = 0;
+
+      function isWeekend(date) {
+        const day = date.getDay();
+        return day === 0 || day === 6;
+      }
+
+      function calculateOfficeDays() {
+        const lastDay = new Date("2026-01-30");
+        let officeDays = 0;
+        let currentDate = new Date(today);
+        currentDate.setDate(currentDate.getDate() + 1);
+
+        while (currentDate <= lastDay) {
+          const dateStr = currentDate.toISOString().split("T")[0];
+
+          if (
+            !isWeekend(currentDate) &&
+            !holidays.has(dateStr) &&
+            !wfhDays.has(dateStr) &&
+            !leaveDays.has(dateStr)
+          ) {
+            officeDays++;
+          }
+
+          currentDate.setDate(currentDate.getDate() + 1);
+        }
+
+        return officeDays;
+      }
+
+      function createCalendar(monthData) {
+        const slide = document.createElement("div");
+        slide.className = "calendar-slide";
+
+        const grid = document.createElement("div");
+        grid.className = "calendar-grid";
+
+        const dayHeaders = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+        dayHeaders.forEach((day) => {
+          const header = document.createElement("div");
+          header.className = "day-header";
+          header.textContent = day;
+          grid.appendChild(header);
+        });
+
+        for (let i = 0; i < monthData.startDay; i++) {
+          const emptyCell = document.createElement("div");
+          emptyCell.className = "day-cell empty";
+          grid.appendChild(emptyCell);
+        }
+
+        for (let day = 1; day <= monthData.days; day++) {
+          const cell = document.createElement("div");
+          cell.className = "day-cell";
+
+          const dateStr = `${monthData.year}-${String(
+            monthData.month + 1
+          ).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+          const currentDate = new Date(dateStr);
+          const isPast = currentDate < today;
+          const isToday = dateStr === today.toISOString().split("T")[0];
+
+          const dayNumber = document.createElement("div");
+          dayNumber.className = "day-number";
+          dayNumber.textContent = day;
+
+          if (isToday) {
+            cell.classList.add("today");
+          } else if (isPast) {
+            cell.classList.add("past");
+          } else if (dateStr === lastDayDate) {
+            cell.classList.add("last-day");
+          } else if (holidays.has(dateStr)) {
+            cell.classList.add("holiday");
+          } else if (leaveDays.has(dateStr)) {
+            cell.classList.add("leave");
+          } else if (wfhDays.has(dateStr)) {
+            cell.classList.add("wfh");
+          } else if (isWeekend(currentDate)) {
+            cell.classList.add("weekend");
+          } else {
+            cell.classList.add("office");
+          }
+
+          cell.appendChild(dayNumber);
+          grid.appendChild(cell);
+        }
+
+        slide.appendChild(grid);
+        return slide;
+      }
+
+      function renderCalendars() {
+        const slider = document.getElementById("calendarSlider");
+        slider.innerHTML = "";
+
+        months.forEach((month) => {
+          const calendar = createCalendar(month);
+          slider.appendChild(calendar);
+        });
+
+        updateCalendarView();
+      }
+
+      function updateCalendarView() {
+        const slider = document.getElementById("calendarSlider");
+        const monthName = document.getElementById("monthName");
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+
+        slider.style.transform = `translateX(-${currentMonthIndex * 100}%)`;
+        monthName.textContent = months[currentMonthIndex].name;
+
+        prevBtn.disabled = currentMonthIndex === 0;
+        nextBtn.disabled = currentMonthIndex === months.length - 1;
+      }
+
+      document.getElementById("prevBtn").addEventListener("click", () => {
+        if (currentMonthIndex > 0) {
+          currentMonthIndex--;
+          updateCalendarView();
+        }
+      });
+
+      document.getElementById("nextBtn").addEventListener("click", () => {
+        if (currentMonthIndex < months.length - 1) {
+          currentMonthIndex++;
+          updateCalendarView();
+        }
+      });
+
+      const countdownEl = document.getElementById("countdown");
+      const messageEl = document.getElementById("message");
+      const daysLeft = calculateOfficeDays();
+
+      countdownEl.textContent = daysLeft;
+
+      const messages = [
+        "Time slips away like rain...",
+        "Every moment matters now...",
+        "The storm reminds us nothing lasts forever...",
+        "Treasuring these final days...",
+        "Soon only memories will remain...",
+      ];
+
+      if (daysLeft === 0) {
+        messageEl.textContent = "Today is the last day... farewell.";
+      } else {
+        messageEl.textContent =
+          messages[Math.floor(Math.random() * messages.length)];
+      }
+
+      renderCalendars();
+    </script>
+  </body>
+</html>
