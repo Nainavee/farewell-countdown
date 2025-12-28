@@ -5,6 +5,8 @@ const stormContainer = document.getElementById("stormContainer");
 const cloudsContainer = document.getElementById("clouds");
 const rainContainer = document.getElementById("rain");
 const lightningEl = document.getElementById("lightning");
+const titleEl = document.querySelector("h1");
+const subtitleEl = document.querySelector(".subtitle");
 
 function createStars() {
   starsContainer.innerHTML = "";
@@ -272,6 +274,10 @@ function updateMood() {
     starsContainer.style.display = "";
     stormContainer.style.display = "none";
     body.classList.remove("sad-mode");
+    // Happy theme text
+
+    titleEl.textContent = "Counting Down Together";
+    subtitleEl.textContent = "You Get to See Me For";
     createStars();
     stopLightning();
     if (daysLeft === 0) {
@@ -284,6 +290,9 @@ function updateMood() {
     starsContainer.style.display = "none";
     stormContainer.style.display = "";
     body.classList.add("sad-mode");
+
+    titleEl.textContent = "You Get To See Me For";
+    subtitleEl.textContent = "office days remaining before farewell";
     createClouds();
     createRain();
     startLightning();
