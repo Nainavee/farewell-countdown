@@ -67,7 +67,7 @@ function stopLightning() {
 }
 
 // Calendar data
-const today = new Date("2025-12-26");
+const today = new Date();
 const holidays = new Set(["2026-01-01", "2026-01-14", "2026-01-26"]);
 const wfhDays = new Set([
   "2026-01-22",
@@ -271,7 +271,7 @@ function updateMood() {
   if (happyMood) {
     starsContainer.style.display = "";
     stormContainer.style.display = "none";
-    // toggleFace.textContent = "🙂";
+    body.classList.remove("sad-mode");
     createStars();
     stopLightning();
     if (daysLeft === 0) {
@@ -283,7 +283,7 @@ function updateMood() {
   } else {
     starsContainer.style.display = "none";
     stormContainer.style.display = "";
-    // toggleFace.textContent = "😭";
+    body.classList.add("sad-mode");
     createClouds();
     createRain();
     startLightning();

@@ -42,6 +42,140 @@
 
   --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* Sad theme variables - Monochrome Gray Depression */
+  --sad-bg-gradient: linear-gradient(
+    135deg,
+    #1a1a1a 0%,
+    #2d2d2d 25%,
+    #1f1f1f 50%,
+    #2a2a2a 75%,
+    #1a1a1a 100%
+  );
+  --sad-card-bg: rgba(40, 40, 40, 0.7);
+  --sad-card-border: rgba(100, 100, 100, 0.3);
+  --sad-card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+  --sad-text-primary: #b8b8b8;
+  --sad-text-secondary: #888888;
+  --sad-text-muted: #5a5a5a;
+  --sad-countdown-gradient: linear-gradient(135deg, #4a4a4a 0%, #2a2a2a 100%);
+  --sad-header-gradient: linear-gradient(135deg, #5a5a5a 0%, #3a3a3a 100%);
+  --sad-message-bg: rgba(40, 40, 40, 0.6);
+  --sad-message-border: rgba(100, 100, 100, 0.25);
+  --sad-weekend-bg: rgba(70, 70, 70, 0.35);
+  --sad-holiday-bg: rgba(80, 80, 80, 0.4);
+  --sad-wfh-bg: rgba(60, 60, 70, 0.35);
+  --sad-leave-bg: rgba(75, 75, 75, 0.35);
+  --sad-office-bg: rgba(90, 90, 100, 0.3);
+  --sad-past-bg: rgba(50, 50, 50, 0.25);
+  --sad-last-day-bg: rgba(100, 100, 110, 0.45);
+  --sad-calendar-container-bg: rgba(30, 30, 30, 0.5);
+  --sad-calendar-container-border: rgba(100, 100, 100, 0.25);
+  --sad-calendar-nav-button-bg: rgba(70, 70, 70, 0.4);
+  --sad-calendar-nav-button-hover-bg: rgba(90, 90, 90, 0.5);
+  --sad-calendar-legend-border: rgba(100, 100, 100, 0.3);
+  --sad-today-border: #888888;
+  --sad-today-shadow: rgba(136, 136, 136, 0.4);
+  --sad-office-border: rgba(90, 90, 100, 0.4);
+}
+/* rgb(18 27 71 / 21%) */
+/* Sad theme overrides */
+body.sad-mode {
+  background: var(--sad-bg-gradient);
+}
+
+body.sad-mode .card {
+  background: var(--sad-card-bg);
+  border: 1px solid var(--sad-card-border);
+  box-shadow: none;
+}
+
+body.sad-mode .header-title {
+  background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+body.sad-mode h1 {
+  color: var(--sad-text-primary);
+}
+
+body.sad-mode .countdown-number {
+  background: var(--sad-countdown-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+body.sad-mode .days-label,
+body.sad-mode .month-name,
+body.sad-mode .footer {
+  color: var(--sad-text-secondary);
+}
+
+body.sad-mode .message {
+  background: var(--sad-message-bg);
+  border: 1px solid var(--sad-card-border);
+  color: var(--sad-text-primary);
+}
+
+body.sad-mode .day-cell {
+  color: var(--sad-text-primary);
+}
+
+body.sad-mode .day-cell.weekend {
+  background: var(--sad-weekend-bg);
+}
+
+body.sad-mode .day-cell.holiday {
+  background: var(--sad-holiday-bg);
+}
+
+body.sad-mode .day-cell.wfh {
+  background: var(--sad-wfh-bg);
+}
+
+body.sad-mode .day-cell.leave {
+  background: var(--sad-leave-bg);
+}
+
+body.sad-mode .day-cell.office {
+  background: var(--sad-office-bg);
+  border: 2px solid rgba(100, 110, 120, 0.3);
+}
+
+body.sad-mode .day-cell.last-day {
+  background: var(--sad-last-day-bg);
+  border: 2px solid var(--sad-text-secondary);
+}
+
+body.sad-mode .day-cell.today {
+  border: 2px solid var(--sad-text-secondary);
+  box-shadow: 0 0 20px rgba(100, 110, 120, 0.4);
+}
+
+body.sad-mode .calendar-container {
+  background: rgba(30, 40, 50, 0.3);
+  border: 1px solid rgba(100, 110, 120, 0.2);
+}
+
+body.sad-mode .nav-button {
+  background: rgba(70, 80, 90, 0.3);
+  border: 1px solid rgba(100, 110, 120, 0.2);
+  color: var(--sad-text-primary);
+}
+
+body.sad-mode .nav-button:hover {
+  background: rgba(90, 100, 110, 0.4);
+}
+
+body.sad-mode .legend-item {
+  color: var(--sad-text-secondary);
+}
+
+body.sad-mode .day-header {
+  color: var(--sad-text-secondary);
 }
 
 * {
@@ -418,39 +552,6 @@ body.light-mode .sun {
 
 body.light-mode .moon {
   opacity: 0;
-}
-
-/* Clouds for day mode */
-.clouds {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: 1;
-  transition: opacity 0.5s ease;
-}
-
-body.light-mode .clouds {
-  opacity: 0;
-}
-
-.cloud {
-  position: absolute;
-  background: rgba(255, 255, 255, 0.7);
-  border-radius: 50px;
-}
-
-.cloud-1 {
-  width: 30px;
-  height: 12px;
-  left: 20px;
-  top: 20px;
-}
-
-.cloud-2 {
-  width: 25px;
-  height: 10px;
-  left: 70px;
-  top: 30px;
 }
 
 /* Change the default state of slider-toggle */
