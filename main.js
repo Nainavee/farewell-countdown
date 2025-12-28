@@ -41,33 +41,115 @@ function createRain() {
     const raindrop = document.createElement("div");
     raindrop.className = "raindrop";
     raindrop.style.left = Math.random() * 100 + "%";
-    raindrop.style.animationDuration = Math.random() * 0.5 + 0.8 + "s";
+    raindrop.style.animationDuration = Math.random() * 1.5 + 1.8 + "s";
     raindrop.style.animationDelay = Math.random() * 2 + "s";
     raindrop.style.opacity = Math.random() * 0.5 + 0.3;
     rainContainer.appendChild(raindrop);
   }
 }
+let lightningTimeout = null; // Store the timeout ID so we can cancel it
 
-function createLightning() {
+function startLightning() {
+  console.log("Lightning strike!");
+  
+  // Flash effect
   lightningEl.classList.add("flash");
+  
+  // Create lightning bolt
+  const bolt = createLightningBolt();
+  lightningEl.appendChild(bolt);
+  
+  // Force a reflow to ensure the element is in the DOM
+  bolt.offsetHeight;
+  
+  // Use requestAnimationFrame to ensure rendering happens
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      bolt.classList.add("strike");
+    });
+  });
+  
+  // Remove flash and bolt after animation (increased to 1 second)
   setTimeout(() => {
     lightningEl.classList.remove("flash");
-  }, 300);
+    bolt.remove();
+  }, 4000); // Changed from 600ms to 1000ms (1 second)
 }
 
-let lightningTimeout;
-function startLightning() {
-  if (lightningTimeout) clearTimeout(lightningTimeout);
-  function randomLightning() {
-    createLightning();
-    lightningTimeout = setTimeout(randomLightning, Math.random() * 8000 + 5000);
+function createLightningBolt() {
+  const boltContainer = document.createElement("div");
+  boltContainer.className = "lightning-bolt";
+  
+  // Random horizontal position (20% to 80%)
+  const startX = Math.random() * 60 + 20;
+  boltContainer.style.left = startX + "%";
+  
+  // Create multiple segments for jagged effect
+  const segments = 10 + Math.floor(Math.random() * 5);
+  let currentOffset = 0;
+  
+  for (let i = 0; i < segments; i++) {
+    const segment = document.createElement("div");
+    segment.className = "bolt-segment";
+    
+    const angle = (Math.random() - 0.5) * 40;
+    const height = 100 / segments;
+    
+    segment.style.top = (i * (100 / segments)) + "%";
+    segment.style.height = height + "%";
+    segment.style.transform = `translateX(${currentOffset}px) rotate(${angle}deg)`;
+    
+    currentOffset += (Math.random() - 0.5) * 30;
+    
+    const glowIntensity = 0.7 + Math.random() * 0.3;
+    segment.style.opacity = glowIntensity;
+    
+    boltContainer.appendChild(segment);
+    
+    if (Math.random() > 0.75 && i < segments - 2) {
+      const branch = document.createElement("div");
+      branch.className = "bolt-branch";
+      branch.style.top = ((i + 0.5) * (100 / segments)) + "%";
+      branch.style.transform = `translateX(${currentOffset}px) rotate(${(Math.random() - 0.5) * 60}deg)`;
+      boltContainer.appendChild(branch);
+    }
   }
-  lightningTimeout = setTimeout(randomLightning, 3000);
-}
-function stopLightning() {
-  if (lightningTimeout) clearTimeout(lightningTimeout);
+  
+  return boltContainer;
 }
 
+// Schedule random lightning strikes
+function scheduleLightning() {
+  // Random interval between 1-5 seconds
+  const nextStrike = Math.random() * 4000 + 1000;
+  
+  lightningTimeout = setTimeout(() => {
+    startLightning();
+    // Schedule the next strike
+    scheduleLightning();
+  }, nextStrike);
+}
+
+// Stop all lightning
+function stopLightning() {
+  console.log("Stopping lightning");
+  
+  // Cancel the scheduled next strike
+  if (lightningTimeout) {
+    clearTimeout(lightningTimeout);
+    lightningTimeout = null;
+  }
+  
+  // Remove any existing flash effect
+  lightningEl.classList.remove("flash");
+  
+  // Remove any existing bolts
+  const existingBolts = lightningEl.querySelectorAll(".lightning-bolt");
+  existingBolts.forEach(bolt => bolt.remove());
+}
+
+// Start the lightning loop
+scheduleLightning();
 // Calendar data
 const today = new Date();
 const holidays = new Set(["2026-01-01", "2026-01-14", "2026-01-26"]);
@@ -230,9 +312,9 @@ const daysLeft = calculateOfficeDays();
 countdownEl.textContent = daysLeft;
 
 const happyMessages = [
-  "Cherish every single moment! 💝",
+  "This moment deserves your full attention 🙂",
   "Make these days unforgettable! ✨",
-  "Time flies when you're having fun! 🦋",
+  "Stay here. This feeling matters 💛",
   "Every day is precious! 🌟",
   "Let's make memories! 🎨",
 ];
@@ -243,6 +325,7 @@ const sadMessages = [
   "The storm reminds us nothing lasts forever...",
   "Treasuring these final days...",
   "Soon only memories will remain...",
+    "Every drop is a moment you won’t get back.",
 ];
 
 // Initialize calendars
@@ -295,7 +378,7 @@ function updateMood() {
     subtitleEl.textContent = "office days remaining before farewell";
     createClouds();
     createRain();
-    startLightning();
+    scheduleLightning();
     if (daysLeft === 0) {
       messageEl.textContent = "Today is the last day... farewell.";
     } else {
