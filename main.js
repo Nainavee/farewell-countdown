@@ -317,6 +317,15 @@ const happyMessages = [
   "Stay here. This feeling matters 💛",
   "Every day is precious! 🌟",
   "Let's make memories! 🎨",
+  "Stay a little longer in this feeling. It’s rare.",
+  "Laugh without checking the time today.",
+  "Hold this moment gently. It loves you back.",
+  "Let joy linger. You won’t always find it this close.",
+  "These seconds are quietly becoming memories.",
+  "Smile like you don’t need to hurry anywhere.",
+  "This happiness is asking to be remembered.",
+  "Be fully here. This is a gift.",
+  "If this is fleeting, make it beautiful.",
 ];
 
 const sadMessages = [
@@ -326,6 +335,13 @@ const sadMessages = [
   "Treasuring these final days...",
   "Soon only memories will remain...",
     "Every drop is a moment you won’t get back.",
+    "The rain keeps falling, even as I prepare to leave.",
+  "Every drop feels like a goodbye I didn’t say.",
+  "The rain is here to remind you: this moment is fragile.",
+  "Stand with me in the rain. There won’t be another time.",
+  "Let the rain slow you down. This is the last time.",
+  "Every falling drop is asking you to remember this.",
+  "When the rain ends, so does this chapter.",
 ];
 
 // Initialize calendars
@@ -385,6 +401,50 @@ function updateMood() {
       messageEl.textContent =
         sadMessages[Math.floor(Math.random() * sadMessages.length)];
     }
+  }
+    startMessageRotation();
+
+}
+
+let messageInterval = null; // Store the interval ID
+
+function startMessageRotation() {
+  // Clear any existing interval
+  if (messageInterval) {
+    clearInterval(messageInterval);
+  }
+  
+  // Change message every 5 seconds (adjust as needed)
+  messageInterval = setInterval(() => {
+    if (daysLeft === 0) {
+      // Don't rotate on the last day
+      return;
+    }
+    
+    // Add animation class
+    messageEl.classList.add('message-changing');
+    
+    // Change message halfway through animation
+    setTimeout(() => {
+      if (happyMood) {
+        messageEl.textContent = happyMessages[Math.floor(Math.random() * happyMessages.length)];
+      } else {
+        messageEl.textContent = sadMessages[Math.floor(Math.random() * sadMessages.length)];
+      }
+    }, 300); // Halfway through the 600ms animation
+    
+    // Remove animation class after it completes
+    setTimeout(() => {
+      messageEl.classList.remove('message-changing');
+    }, 600);
+    
+  }, 5000);
+}
+
+function stopMessageRotation() {
+  if (messageInterval) {
+    clearInterval(messageInterval);
+    messageInterval = null;
   }
 }
 toggleContainer.addEventListener("click", () => {

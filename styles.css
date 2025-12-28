@@ -1431,3 +1431,22 @@ body.sad-mode .legend-box.last-day {
     transform: scale(0.6);
   }
 }
+
+@keyframes messageChange {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message-changing {
+  animation: messageChange 0.6s ease-in-out;
+}
