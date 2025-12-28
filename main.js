@@ -51,24 +51,24 @@ let lightningTimeout = null; // Store the timeout ID so we can cancel it
 
 function startLightning() {
   console.log("Lightning strike!");
-  
+
   // Flash effect
   lightningEl.classList.add("flash");
-  
+
   // Create lightning bolt
   const bolt = createLightningBolt();
   lightningEl.appendChild(bolt);
-  
+
   // Force a reflow to ensure the element is in the DOM
   bolt.offsetHeight;
-  
+
   // Use requestAnimationFrame to ensure rendering happens
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
       bolt.classList.add("strike");
     });
   });
-  
+
   // Remove flash and bolt after animation (increased to 1 second)
   setTimeout(() => {
     lightningEl.classList.remove("flash");
@@ -79,42 +79,44 @@ function startLightning() {
 function createLightningBolt() {
   const boltContainer = document.createElement("div");
   boltContainer.className = "lightning-bolt";
-  
+
   // Random horizontal position (20% to 80%)
   const startX = Math.random() * 60 + 20;
   boltContainer.style.left = startX + "%";
-  
+
   // Create multiple segments for jagged effect
   const segments = 10 + Math.floor(Math.random() * 5);
   let currentOffset = 0;
-  
+
   for (let i = 0; i < segments; i++) {
     const segment = document.createElement("div");
     segment.className = "bolt-segment";
-    
+
     const angle = (Math.random() - 0.5) * 40;
     const height = 100 / segments;
-    
-    segment.style.top = (i * (100 / segments)) + "%";
+
+    segment.style.top = i * (100 / segments) + "%";
     segment.style.height = height + "%";
     segment.style.transform = `translateX(${currentOffset}px) rotate(${angle}deg)`;
-    
+
     currentOffset += (Math.random() - 0.5) * 30;
-    
+
     const glowIntensity = 0.7 + Math.random() * 0.3;
     segment.style.opacity = glowIntensity;
-    
+
     boltContainer.appendChild(segment);
-    
+
     if (Math.random() > 0.75 && i < segments - 2) {
       const branch = document.createElement("div");
       branch.className = "bolt-branch";
-      branch.style.top = ((i + 0.5) * (100 / segments)) + "%";
-      branch.style.transform = `translateX(${currentOffset}px) rotate(${(Math.random() - 0.5) * 60}deg)`;
+      branch.style.top = (i + 0.5) * (100 / segments) + "%";
+      branch.style.transform = `translateX(${currentOffset}px) rotate(${
+        (Math.random() - 0.5) * 60
+      }deg)`;
       boltContainer.appendChild(branch);
     }
   }
-  
+
   return boltContainer;
 }
 
@@ -122,7 +124,7 @@ function createLightningBolt() {
 function scheduleLightning() {
   // Random interval between 1-5 seconds
   const nextStrike = Math.random() * 4000 + 1000;
-  
+
   lightningTimeout = setTimeout(() => {
     startLightning();
     // Schedule the next strike
@@ -133,19 +135,19 @@ function scheduleLightning() {
 // Stop all lightning
 function stopLightning() {
   console.log("Stopping lightning");
-  
+
   // Cancel the scheduled next strike
   if (lightningTimeout) {
     clearTimeout(lightningTimeout);
     lightningTimeout = null;
   }
-  
+
   // Remove any existing flash effect
   lightningEl.classList.remove("flash");
-  
+
   // Remove any existing bolts
   const existingBolts = lightningEl.querySelectorAll(".lightning-bolt");
-  existingBolts.forEach(bolt => bolt.remove());
+  existingBolts.forEach((bolt) => bolt.remove());
 }
 
 // Start the lightning loop
@@ -258,13 +260,101 @@ function createCalendar(monthData) {
     }
 
     cell.appendChild(dayNumber);
+    // Inside the day cell creation loop, add this after cell.appendChild(dayNumber):
+    cell.addEventListener("click", (e) => {
+      e.stopPropagation();
+      showDayPopup(dateStr, cell);
+    });
     grid.appendChild(cell);
   }
 
   slide.appendChild(grid);
   return slide;
 }
+function showDayPopup(dateStr, dayElement) {
+  // Remove any existing popup
+  const existingPopup = document.querySelector(".day-popup");
+  if (existingPopup) {
+    existingPopup.remove();
+  }
 
+  // Calculate days left from this date
+  const clickedDate = new Date(dateStr);
+  const lastDay = new Date("2026-01-30");
+  let officeDaysFromHere = 0;
+  let currentDate = new Date(clickedDate);
+  currentDate.setDate(currentDate.getDate() + 1);
+
+  while (currentDate <= lastDay) {
+    const dateString = currentDate.toISOString().split("T")[0];
+
+    if (
+      !isWeekend(currentDate) &&
+      !holidays.has(dateString) &&
+      !wfhDays.has(dateString) &&
+      !leaveDays.has(dateString)
+    ) {
+      officeDaysFromHere++;
+    }
+
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  // Get position of the clicked day
+  const rect = dayElement.getBoundingClientRect();
+
+  // Create popup
+  const popup = document.createElement("div");
+  popup.className = "day-popup";
+  if(officeDaysFromHere === 0){
+    popup.innerHTML = `
+    <div class="popup-content">
+      <strong>Last Day!</strong> Make it count!🥺
+    </div>
+  `;
+  } else{
+  popup.innerHTML = `
+    <div class="popup-content">
+      <strong>${officeDaysFromHere}</strong> days to go
+    </div>
+  `;
+
+  }
+  // Append to body instead of cell
+  document.body.appendChild(popup);
+  // Get popup dimensions
+  const popupWidth = popup.offsetWidth;
+  const screenWidth = window.innerWidth;
+
+  // Calculate ideal left position (centered under cell)
+  let leftPos = rect.left + rect.width / 2 - popupWidth / 2;
+
+  // Keep popup within screen bounds with more padding
+  const padding = 20;
+
+  // If popup would go off left edge, center it on screen instead
+  if (leftPos < padding) {
+    leftPos = (screenWidth - popupWidth) / 2;
+  }
+  // If popup would go off right edge, center it on screen instead
+  else if (leftPos + popupWidth > screenWidth - padding) {
+    leftPos = (screenWidth - popupWidth) / 2;
+  }
+
+  // Position it
+  popup.style.left = `${leftPos}px`;
+  popup.style.top = `${rect.bottom }px`;
+
+  // Remove popup when clicking outside
+  setTimeout(() => {
+    document.addEventListener("click", function removePopup(e) {
+      if (!dayElement.contains(e.target)) {
+        popup.remove();
+        document.removeEventListener("click", removePopup);
+      }
+    });
+  }, 10);
+}
 function renderCalendars() {
   const slider = document.getElementById("calendarSlider");
   slider.innerHTML = "";
@@ -334,8 +424,8 @@ const sadMessages = [
   "The storm reminds us nothing lasts forever...",
   "Treasuring these final days...",
   "Soon only memories will remain...",
-    "Every drop is a moment you won’t get back.",
-    "The rain keeps falling, even as I prepare to leave.",
+  "Every drop is a moment you won’t get back.",
+  "The rain keeps falling, even as I prepare to leave.",
   "Every drop feels like a goodbye I didn’t say.",
   "The rain is here to remind you: this moment is fragile.",
   "Stand with me in the rain. There won’t be another time.",
@@ -391,7 +481,7 @@ function updateMood() {
     body.classList.add("sad-mode");
 
     titleEl.textContent = "You Get To See Me For";
-    subtitleEl.textContent = "office days remaining before farewell";
+    subtitleEl.textContent = "Office days remaining before farewell...";
     createClouds();
     createRain();
     scheduleLightning();
@@ -402,8 +492,7 @@ function updateMood() {
         sadMessages[Math.floor(Math.random() * sadMessages.length)];
     }
   }
-    startMessageRotation();
-
+  startMessageRotation();
 }
 
 let messageInterval = null; // Store the interval ID
@@ -413,31 +502,32 @@ function startMessageRotation() {
   if (messageInterval) {
     clearInterval(messageInterval);
   }
-  
+
   // Change message every 5 seconds (adjust as needed)
   messageInterval = setInterval(() => {
     if (daysLeft === 0) {
       // Don't rotate on the last day
       return;
     }
-    
+
     // Add animation class
-    messageEl.classList.add('message-changing');
-    
+    messageEl.classList.add("message-changing");
+
     // Change message halfway through animation
     setTimeout(() => {
       if (happyMood) {
-        messageEl.textContent = happyMessages[Math.floor(Math.random() * happyMessages.length)];
+        messageEl.textContent =
+          happyMessages[Math.floor(Math.random() * happyMessages.length)];
       } else {
-        messageEl.textContent = sadMessages[Math.floor(Math.random() * sadMessages.length)];
+        messageEl.textContent =
+          sadMessages[Math.floor(Math.random() * sadMessages.length)];
       }
     }, 700); // Halfway through the 600ms animation
-    
+
     // Remove animation class after it completes
     setTimeout(() => {
-      messageEl.classList.remove('message-changing');
+      messageEl.classList.remove("message-changing");
     }, 1400);
-    
   }, 8000);
 }
 

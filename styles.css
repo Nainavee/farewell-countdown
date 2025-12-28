@@ -58,7 +58,7 @@
   --sad-text-primary: #b8b8b8;
   --sad-text-secondary: #888888;
   --sad-text-muted: #5a5a5a;
-  --sad-countdown-gradient: linear-gradient(135deg, #4a4a4a 0%, #2a2a2a 100%);
+  --sad-countdown-gradient: linear-gradient(135deg, #eee0e0 0%, #2a2a2a 100%);
   --sad-header-gradient: linear-gradient(135deg, #5a5a5a 0%, #3a3a3a 100%);
   --sad-message-bg: rgba(40, 40, 40, 0.6);
   --sad-message-border: rgba(100, 100, 100, 0.25);
@@ -598,7 +598,7 @@ body.light-mode .emoji-night {
 }
 
 body.light-mode .emoji-day {
-  opacity: 1; /* Changed from 0 to 1 */
+  opacity: 0.8; /* Changed from 0 to 1 */
 }
 
 /* Responsive */
@@ -1449,4 +1449,74 @@ body.sad-mode .legend-box.last-day {
 
 .message-changing {
   animation: messageChange 1.4s ease-in-out;
+}
+
+.day-popup {
+  position: fixed;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 8px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 2px solid #667eea;
+  border-radius: 8px;
+  padding: 10px 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  z-index: 1000000;
+  white-space: nowrap;
+  animation: popupAppear 0.2s ease-out;
+  pointer-events: none;
+}
+body.sad-mode .day-popup {
+  position: fixed;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 8px;
+  background: rgba(150, 146, 146, 0.95);
+  border: 2px solid #46538c;
+  border-radius: 8px;
+  padding: 10px 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  z-index: 1000000;
+  white-space: nowrap;
+  animation: popupAppear 0.2s ease-out;
+  pointer-events: none;
+}
+
+@keyframes popupAppear {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.popup-content {
+  font-size: 0.6rem;
+  color: #333;
+  font-weight: 500;
+}
+
+.popup-content strong {
+  color: #667eea;
+  font-size: 0.8rem;
+}
+
+body.sad-mode .popup-content {
+  font-size: 0.6rem;
+  color: #333;
+  font-weight: 500;
+}
+
+body.sad-mode .popup-content strong {
+  color: #3c5eb5e5;
+  font-size: 0.8rem;
+}
+
+.day-cell {
+  position: relative; /* Add this to existing .day-cell styles */
 }
