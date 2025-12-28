@@ -1,6 +1,6 @@
 const starsContainer = document.getElementById("stars");
-const toggleMood = document.getElementById("toggleMood");
-const toggleFace = document.getElementById("toggleFace");
+const toggleContainer = document.getElementById("toggleContainer");
+const body = document.body;
 const stormContainer = document.getElementById("stormContainer");
 const cloudsContainer = document.getElementById("clouds");
 const rainContainer = document.getElementById("rain");
@@ -267,10 +267,11 @@ setInterval(createFloatingEmojis, 1500);
 // --- Mood toggle logic ---
 let happyMood = true;
 function updateMood() {
+  console.log(happyMood);
   if (happyMood) {
     starsContainer.style.display = "";
     stormContainer.style.display = "none";
-    toggleFace.textContent = "🙂";
+    // toggleFace.textContent = "🙂";
     createStars();
     stopLightning();
     if (daysLeft === 0) {
@@ -282,7 +283,7 @@ function updateMood() {
   } else {
     starsContainer.style.display = "none";
     stormContainer.style.display = "";
-    toggleFace.textContent = "😭";
+    // toggleFace.textContent = "😭";
     createClouds();
     createRain();
     startLightning();
@@ -294,8 +295,9 @@ function updateMood() {
     }
   }
 }
-toggleMood.addEventListener("click", () => {
+toggleContainer.addEventListener("click", () => {
   happyMood = !happyMood;
+  body.classList.toggle("light-mode");
   updateMood();
 });
 updateMood();
