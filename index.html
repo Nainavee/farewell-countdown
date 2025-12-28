@@ -8,12 +8,85 @@
   </head>
   <body>
     <div class="stars" id="stars"></div>
+    <div class="storm-container" id="stormContainer" style="display: none">
+      <div class="clouds" id="clouds"></div>
+      <div class="rain" id="rain"></div>
+      <div class="lightning" id="lightning"></div>
+    </div>
 
     <div class="container">
       <div class="card">
         <div class="card-content">
-          <div class="header-title">Counting Down Together</div>
-          <h1>You Get To See Me For</h1>
+          <div class="header-section">
+            <h1 class="header-title">Counting Down Together</h1>
+            <div class="toggle-container small-toggle" id="toggleContainer">
+              <div class="switch-background">
+                <!-- Night background -->
+                <div class="night-side"></div>
+
+                <!-- Day background -->
+                <div class="day-side"></div>
+
+                <!-- Sad scenery (rain and storm) -->
+                <div class="scenery sad-scenery">
+                  <div class="rain-cloud rain-cloud-1"></div>
+                  <div class="rain-cloud rain-cloud-2"></div>
+                  <div class="rain-cloud rain-cloud-3"></div>
+                  <div class="rain">
+                    <div class="rain-drop"></div>
+                    <div class="rain-drop"></div>
+                    <div class="rain-drop"></div>
+                    <div class="rain-drop"></div>
+                    <div class="rain-drop"></div>
+                    <div class="rain-drop"></div>
+                    <div class="rain-drop"></div>
+                    <div class="rain-drop"></div>
+                  </div>
+                </div>
+
+                <!-- Night scenery -->
+                <div class="scenery night-scenery">
+                  <div class="stars">
+                    <div class="star"></div>
+                    <div class="star"></div>
+                    <div class="star"></div>
+                    <div class="star"></div>
+                    <div class="star"></div>
+                    <div class="star"></div>
+                    <div class="star"></div>
+                    <div class="star"></div>
+                    <div class="star"></div>
+                    <div class="star"></div>
+                  </div>
+                  <div class="mountain mountain-1"></div>
+                  <div class="mountain mountain-2"></div>
+                  <div class="mountain mountain-3"></div>
+                  <div class="trees">
+                    <div class="tree" style="height: 18px"></div>
+                    <div class="tree" style="height: 20px"></div>
+                    <div class="tree" style="height: 15px"></div>
+                    <div class="tree" style="height: 22px"></div>
+                    <div class="tree" style="height: 19px"></div>
+                    <div class="tree" style="height: 17px"></div>
+                    <div class="tree" style="height: 21px"></div>
+                    <div class="tree" style="height: 16px"></div>
+                    <div class="tree" style="height: 20px"></div>
+                    <div class="tree" style="height: 18px"></div>
+                  </div>
+                </div>
+
+                <!-- Day scenery -->
+                <div class="moon"></div>
+              </div>
+
+              <!-- Slider button with emoji -->
+              <div class="slider-toggle">
+                <span class="emoji emoji-day">😭</span>
+                <span class="emoji emoji-night">🙂</span>
+              </div>
+            </div>
+          </div>
+          <h1 class="subtitle">You Get To See Me For</h1>
           <div class="countdown-number" id="countdown">0</div>
           <div class="days-label">Days</div>
           <div class="message" id="message">Making every moment count! 💫</div>

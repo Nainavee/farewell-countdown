@@ -35,8 +35,147 @@
   --past-bg: rgba(158, 158, 158, 0.1);
   --last-day-bg: rgba(255, 64, 129, 0.3);
 
+  /* ...existing variables... */
+  --rain-color: rgba(180, 180, 200, 0.6);
+  --lightning-color: rgba(200, 200, 220, 0.9);
+  --cloud-color: rgba(60, 60, 70, 0.4);
+
   --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* Sad theme variables - Monochrome Gray Depression */
+  --sad-bg-gradient: linear-gradient(
+    135deg,
+    #1a1a1a 0%,
+    #2d2d2d 25%,
+    #1f1f1f 50%,
+    #2a2a2a 75%,
+    #1a1a1a 100%
+  );
+  --sad-card-bg: rgba(40, 40, 40, 0.7);
+  --sad-card-border: rgba(100, 100, 100, 0.3);
+  --sad-card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+  --sad-text-primary: #b8b8b8;
+  --sad-text-secondary: #888888;
+  --sad-text-muted: #5a5a5a;
+  --sad-countdown-gradient: linear-gradient(135deg, #4a4a4a 0%, #2a2a2a 100%);
+  --sad-header-gradient: linear-gradient(135deg, #5a5a5a 0%, #3a3a3a 100%);
+  --sad-message-bg: rgba(40, 40, 40, 0.6);
+  --sad-message-border: rgba(100, 100, 100, 0.25);
+  --sad-weekend-bg: rgba(70, 70, 70, 0.35);
+  --sad-holiday-bg: rgba(80, 80, 80, 0.4);
+  --sad-wfh-bg: rgba(60, 60, 70, 0.35);
+  --sad-leave-bg: rgba(75, 75, 75, 0.35);
+  --sad-office-bg: rgba(90, 90, 100, 0.3);
+  --sad-past-bg: rgba(50, 50, 50, 0.25);
+  --sad-last-day-bg: rgba(100, 100, 110, 0.45);
+  --sad-calendar-container-bg: rgba(30, 30, 30, 0.5);
+  --sad-calendar-container-border: rgba(100, 100, 100, 0.25);
+  --sad-calendar-nav-button-bg: rgba(70, 70, 70, 0.4);
+  --sad-calendar-nav-button-hover-bg: rgba(90, 90, 90, 0.5);
+  --sad-calendar-legend-border: rgba(100, 100, 100, 0.3);
+  --sad-today-border: #888888;
+  --sad-today-shadow: rgba(136, 136, 136, 0.4);
+  --sad-office-border: rgba(90, 90, 100, 0.4);
+}
+/* rgb(18 27 71 / 21%) */
+/* Sad theme overrides */
+body.sad-mode {
+  background: var(--sad-bg-gradient);
+}
+
+body.sad-mode .card {
+  background: var(--sad-card-bg);
+  border: 1px solid var(--sad-card-border);
+  box-shadow: none;
+}
+
+body.sad-mode .header-title {
+  background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+body.sad-mode h1 {
+  color: var(--sad-text-primary);
+}
+
+body.sad-mode .countdown-number {
+  background: var(--sad-countdown-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+body.sad-mode .days-label,
+body.sad-mode .month-name,
+body.sad-mode .footer {
+  color: var(--sad-text-secondary);
+}
+
+body.sad-mode .message {
+  background: var(--sad-message-bg);
+  border: 1px solid var(--sad-card-border);
+  color: var(--sad-text-primary);
+}
+
+body.sad-mode .day-cell {
+  color: var(--sad-text-primary);
+}
+
+body.sad-mode .day-cell.weekend {
+  background: var(--sad-weekend-bg);
+}
+
+body.sad-mode .day-cell.holiday {
+  background: var(--sad-holiday-bg);
+}
+
+body.sad-mode .day-cell.wfh {
+  background: var(--sad-wfh-bg);
+}
+
+body.sad-mode .day-cell.leave {
+  background: var(--sad-leave-bg);
+}
+
+body.sad-mode .day-cell.office {
+  background: var(--sad-office-bg);
+  border: 2px solid rgba(100, 110, 120, 0.3);
+}
+
+body.sad-mode .day-cell.last-day {
+  background: var(--sad-last-day-bg);
+  border: 2px solid var(--sad-text-secondary);
+}
+
+body.sad-mode .day-cell.today {
+  border: 2px solid var(--sad-text-secondary);
+  box-shadow: 0 0 20px rgba(100, 110, 120, 0.4);
+}
+
+body.sad-mode .calendar-container {
+  background: rgba(30, 40, 50, 0.3);
+  border: 1px solid rgba(100, 110, 120, 0.2);
+}
+
+body.sad-mode .nav-button {
+  background: rgba(70, 80, 90, 0.3);
+  border: 1px solid rgba(100, 110, 120, 0.2);
+  color: var(--sad-text-primary);
+}
+
+body.sad-mode .nav-button:hover {
+  background: rgba(90, 100, 110, 0.4);
+}
+
+body.sad-mode .legend-item {
+  color: var(--sad-text-secondary);
+}
+
+body.sad-mode .day-header {
+  color: var(--sad-text-secondary);
 }
 
 * {
@@ -55,6 +194,445 @@ body {
   padding: 20px;
   overflow-x: hidden;
   position: relative;
+}
+
+.toggle-container {
+  position: relative;
+  width: 200px;
+  height: 90px;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Switch body background */
+.switch-background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50px;
+  overflow: hidden;
+  box-shadow: inset 0px 6px 8px 3px rgba(0, 0, 0, 0.25);
+}
+
+/* Night side (default) */
+.night-side {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, #4a5568 0%, #2d3748 100%);
+  border-radius: 50px;
+  transition: opacity 0.5s ease;
+  opacity: 0;
+}
+
+/* Day side */
+.day-side {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, #364bba 0%, #a979d9 100%);
+  border-radius: 50px;
+  transition: opacity 0.5s ease;
+  opacity: 1;
+}
+
+body.light-mode .night-side {
+  opacity: 1;
+}
+
+body.light-mode .day-side {
+  opacity: 0;
+}
+
+/* Scenery elements for night mode */
+.scenery {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+.night-scenery {
+  opacity: 1;
+}
+
+body.light-mode .night-scenery {
+  opacity: 0;
+}
+
+.sad-scenery {
+  opacity: 0;
+}
+
+body.light-mode .sad-scenery {
+  opacity: 1;
+}
+
+/* Mountains */
+.mountain {
+  position: absolute;
+  bottom: 0;
+  background: linear-gradient(180deg, #6783ca 29.02%, #271b59 100%);
+}
+
+.mountain-1 {
+  left: 10%;
+  width: 40px;
+  height: 35px;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.mountain-2 {
+  left: 35%;
+  width: 45px;
+  height: 38px;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.mountain-3 {
+  right: 15%;
+  width: 50px;
+  height: 42px;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+/* Rain clouds for sad mode */
+.rain-cloud {
+  position: absolute;
+  background: linear-gradient(180deg, #1a202c 0%, #2d3748 100%);
+  border-radius: 50px;
+}
+
+.rain-cloud-1 {
+  width: 50px;
+  height: 20px;
+  left: 15px;
+  top: 15px;
+}
+
+.rain-cloud-2 {
+  width: 45px;
+  height: 18px;
+  right: 20px;
+  top: 20px;
+}
+
+.rain-cloud-3 {
+  width: 40px;
+  height: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 25px;
+}
+
+/* Rain drops */
+.rain {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.rain-drop {
+  position: absolute;
+  width: 2px;
+  height: 10px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    transparent 100%
+  );
+  border-radius: 2px;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(90px);
+    opacity: 0;
+  }
+}
+
+.rain-drop:nth-child(1) {
+  left: 20%;
+  animation-duration: 1s;
+  animation-delay: 0s;
+}
+.rain-drop:nth-child(2) {
+  left: 35%;
+  animation-duration: 1.2s;
+  animation-delay: 0.2s;
+}
+.rain-drop:nth-child(3) {
+  left: 50%;
+  animation-duration: 0.9s;
+  animation-delay: 0.4s;
+}
+.rain-drop:nth-child(4) {
+  left: 65%;
+  animation-duration: 1.1s;
+  animation-delay: 0.1s;
+}
+.rain-drop:nth-child(5) {
+  left: 80%;
+  animation-duration: 1s;
+  animation-delay: 0.3s;
+}
+.rain-drop:nth-child(6) {
+  left: 25%;
+  animation-duration: 1.3s;
+  animation-delay: 0.5s;
+}
+.rain-drop:nth-child(7) {
+  left: 45%;
+  animation-duration: 0.95s;
+  animation-delay: 0.15s;
+}
+.rain-drop:nth-child(8) {
+  left: 70%;
+  animation-duration: 1.15s;
+  animation-delay: 0.35s;
+}
+
+/* Trees */
+.trees {
+  position: absolute;
+  bottom: 10px;
+  left: 15px;
+  right: 15px;
+  height: 25px;
+  display: flex;
+  gap: 4px;
+  align-items: flex-end;
+}
+
+.tree {
+  width: 3px;
+  background: linear-gradient(180deg, #111f51 0%, rgba(131, 69, 159, 0) 100%);
+  border-radius: 0.5px;
+}
+
+/* Stars */
+.stars {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.star {
+  position: absolute;
+  background: linear-gradient(
+    180deg,
+    #fffeda 0%,
+    rgba(255, 254, 218, 0.59) 100%
+  );
+  border-radius: 50%;
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.star:nth-child(1) {
+  width: 2px;
+  height: 2px;
+  left: 70%;
+  top: 15%;
+  animation-delay: 0s;
+}
+.star:nth-child(2) {
+  width: 3px;
+  height: 3px;
+  left: 48%;
+  top: 42%;
+  animation-delay: 0.5s;
+}
+.star:nth-child(3) {
+  width: 3px;
+  height: 3px;
+  left: 88%;
+  top: 24%;
+  animation-delay: 1s;
+}
+.star:nth-child(4) {
+  width: 1px;
+  height: 1px;
+  left: 81%;
+  top: 23%;
+  animation-delay: 1.5s;
+}
+.star:nth-child(5) {
+  width: 3px;
+  height: 3px;
+  left: 28%;
+  top: 32%;
+  animation-delay: 2s;
+}
+.star:nth-child(6) {
+  width: 4px;
+  height: 4px;
+  left: 33%;
+  top: 13%;
+  animation-delay: 2.5s;
+}
+.star:nth-child(7) {
+  width: 2px;
+  height: 2px;
+  left: 25%;
+  top: 16%;
+  animation-delay: 0.8s;
+}
+.star:nth-child(8) {
+  width: 2px;
+  height: 2px;
+  left: 18%;
+  top: 37%;
+  animation-delay: 1.3s;
+}
+.star:nth-child(9) {
+  width: 3px;
+  height: 3px;
+  left: 50%;
+  top: 23%;
+  animation-delay: 1.8s;
+}
+.star:nth-child(10) {
+  width: 4px;
+  height: 4px;
+  left: 78%;
+  top: 9%;
+  animation-delay: 2.3s;
+}
+
+/* Sun for day mode */
+.sun {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  right: 20px;
+  top: 15px;
+  background: radial-gradient(circle, #ffe66d 0%, #ffa500 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(255, 230, 109, 0.6);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+body.light-mode .sun {
+  opacity: 0;
+}
+
+/* Moon for happy night mode */
+.moon {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  right: 25px;
+  top: 18px;
+  background: radial-gradient(circle, #f4e5c2 0%, #e8d5a8 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 15px rgba(244, 229, 194, 0.5);
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+body.light-mode .moon {
+  opacity: 0;
+}
+
+/* Change the default state of slider-toggle */
+.slider-toggle {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  top: 20px;
+  left: 125px; /* Changed from 25px to 125px to start on the right */
+  transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 42px;
+  z-index: 10;
+  background: transparent;
+}
+
+body.light-mode .slider-toggle {
+  transform: translateX(-125px); /* Changed from translateX(125px) */
+}
+
+/* Emoji faces */
+.emoji {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  line-height: 1;
+}
+
+/* Change the default emoji states */
+.emoji-night {
+  position: absolute;
+  opacity: 1; /* Changed from 0 to 1 */
+}
+
+.emoji-day {
+  position: absolute;
+  opacity: 0; /* Changed from 1 to 0 */
+}
+
+body.light-mode .emoji-night {
+  opacity: 0; /* Changed from 1 to 0 */
+}
+
+body.light-mode .emoji-day {
+  opacity: 1; /* Changed from 0 to 1 */
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .toggle-container {
+    width: 160px;
+    height: 72px;
+  }
+
+  .slider-toggle {
+    width: 40px;
+    height: 40px;
+    top: 16px;
+    left: 85px; /* Changed from 20px to 100px */
+    font-size: 20px;
+  }
+
+  body.light-mode .slider-toggle {
+    transform: translateX(-100px); /* Changed from translateX(100px) */
+    font-size: 32px;
+  }
+}
+
+/* Demo text */
+.demo-text {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  opacity: 0.9;
 }
 
 .stars {
@@ -85,6 +663,225 @@ body {
   50% {
     opacity: 1;
     transform: scale(1.5);
+  }
+}
+/* Storm Background */
+.storm-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+/* Dark Clouds */
+.clouds {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.cloud {
+  position: absolute;
+  background: var(--cloud-color);
+  border-radius: 100px;
+  opacity: 0.6;
+  animation: driftCloud linear infinite;
+}
+
+.cloud::before,
+.cloud::after {
+  content: "";
+  position: absolute;
+  background: var(--cloud-color);
+  border-radius: 100px;
+}
+
+.cloud.small {
+  width: 80px;
+  height: 30px;
+  top: 10%;
+  animation-duration: 35s;
+}
+
+.cloud.small::before {
+  width: 50px;
+  height: 40px;
+  top: -20px;
+  left: 10px;
+}
+
+.cloud.small::after {
+  width: 60px;
+  height: 35px;
+  top: -15px;
+  right: 10px;
+}
+
+.cloud.medium {
+  width: 120px;
+  height: 40px;
+  top: 20%;
+  animation-duration: 45s;
+}
+
+.cloud.medium::before {
+  width: 70px;
+  height: 50px;
+  top: -25px;
+  left: 15px;
+}
+
+.cloud.medium::after {
+  width: 80px;
+  height: 45px;
+  top: -20px;
+  right: 15px;
+}
+
+.cloud.large {
+  width: 160px;
+  height: 50px;
+  top: 5%;
+  animation-duration: 55s;
+}
+
+.cloud.large::before {
+  width: 90px;
+  height: 60px;
+  top: -30px;
+  left: 20px;
+}
+
+.cloud.large::after {
+  width: 100px;
+  height: 55px;
+  top: -25px;
+  right: 20px;
+}
+
+@keyframes driftCloud {
+  0% {
+    left: -20%;
+  }
+  100% {
+    left: 120%;
+  }
+}
+
+/* Rain */
+.rain {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.raindrop {
+  position: absolute;
+  width: 2px;
+  height: 40px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--rain-color),
+    transparent
+  );
+  animation: fall linear infinite;
+  opacity: 0.7;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.7;
+  }
+  90% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+/* Lightning */
+.lightning {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.lightning.flash {
+  animation: lightningFlash 0.3s ease-out;
+}
+
+@keyframes lightningFlash {
+  0% {
+    opacity: 0;
+    background: transparent;
+  }
+  10% {
+    opacity: 0.8;
+    background: radial-gradient(
+      ellipse at 50% 20%,
+      rgba(200, 200, 220, 0.4),
+      transparent 60%
+    );
+  }
+  20% {
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+    background: radial-gradient(
+      ellipse at 50% 20%,
+      rgba(200, 200, 220, 0.5),
+      transparent 60%
+    );
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.lightning-bolt {
+  position: absolute;
+  width: 4px;
+  background: var(--lightning-color);
+  box-shadow: 0 0 10px var(--lightning-color), 0 0 20px var(--lightning-color);
+  opacity: 0;
+}
+
+.lightning-bolt.strike {
+  animation: boltStrike 0.3s ease-out;
+}
+
+@keyframes boltStrike {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  30% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 0;
   }
 }
 
@@ -432,7 +1229,7 @@ h1 {
   background: var(--last-day-bg);
 }
 
-.hearts {
+.floaters {
   position: fixed;
   bottom: -50px;
   font-size: 30px;
@@ -445,13 +1242,16 @@ h1 {
 @keyframes floatUp {
   0% {
     bottom: -50px;
-    opacity: 1;
-    transform: translateX(0) rotate(0deg);
+    opacity: 0.8;
+    transform: translateX(0) scale(1) rotate(0deg);
+  }
+  80% {
+    opacity: 0.8;
   }
   100% {
     bottom: 100vh;
     opacity: 0;
-    transform: translateX(100px) rotate(360deg);
+    transform: translateX(-40px) scale(0.9) rotate(-20deg);
   }
 }
 
@@ -550,5 +1350,24 @@ h1 {
   }
   .footer {
     margin-top: 20px;
+  }
+}
+
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.small-toggle {
+  transform: scale(0.7);
+  transform-origin: center;
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 600px) {
+  .small-toggle {
+    transform: scale(0.6);
   }
 }
