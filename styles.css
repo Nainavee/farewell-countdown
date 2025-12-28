@@ -511,7 +511,7 @@ body.light-mode .emoji-day {
     width: 40px;
     height: 40px;
     top: 16px;
-    left: 100px; /* Changed from 20px to 100px */
+    left: 85px; /* Changed from 20px to 100px */
     font-size: 20px;
   }
 
@@ -1249,5 +1249,24 @@ h1 {
   }
   .footer {
     margin-top: 20px;
+  }
+}
+
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.small-toggle {
+  transform: scale(0.7);
+  transform-origin: center;
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 600px) {
+  .small-toggle {
+    transform: scale(0.6);
   }
 }
