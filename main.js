@@ -1,12 +1,69 @@
-// Create stars
 const starsContainer = document.getElementById("stars");
-for (let i = 0; i < 100; i++) {
-  const star = document.createElement("div");
-  star.className = "star";
-  star.style.left = Math.random() * 100 + "%";
-  star.style.top = Math.random() * 100 + "%";
-  star.style.animationDelay = Math.random() * 3 + "s";
-  starsContainer.appendChild(star);
+const toggleMood = document.getElementById("toggleMood");
+const toggleFace = document.getElementById("toggleFace");
+const stormContainer = document.getElementById("stormContainer");
+const cloudsContainer = document.getElementById("clouds");
+const rainContainer = document.getElementById("rain");
+const lightningEl = document.getElementById("lightning");
+
+function createStars() {
+  starsContainer.innerHTML = "";
+  for (let i = 0; i < 100; i++) {
+    const star = document.createElement("div");
+    star.className = "star";
+    star.style.left = Math.random() * 100 + "%";
+    star.style.top = Math.random() * 100 + "%";
+    star.style.animationDelay = Math.random() * 3 + "s";
+    starsContainer.appendChild(star);
+  }
+}
+
+function createClouds() {
+  cloudsContainer.innerHTML = "";
+  const cloudTypes = ["small", "medium", "large"];
+  const cloudCount = 8;
+  for (let i = 0; i < cloudCount; i++) {
+    const cloud = document.createElement("div");
+    cloud.className = `cloud ${
+      cloudTypes[Math.floor(Math.random() * cloudTypes.length)]
+    }`;
+    cloud.style.left = Math.random() * 120 - 20 + "%";
+    cloud.style.animationDelay = Math.random() * 10 + "s";
+    cloudsContainer.appendChild(cloud);
+  }
+}
+
+function createRain() {
+  rainContainer.innerHTML = "";
+  for (let i = 0; i < 150; i++) {
+    const raindrop = document.createElement("div");
+    raindrop.className = "raindrop";
+    raindrop.style.left = Math.random() * 100 + "%";
+    raindrop.style.animationDuration = Math.random() * 0.5 + 0.8 + "s";
+    raindrop.style.animationDelay = Math.random() * 2 + "s";
+    raindrop.style.opacity = Math.random() * 0.5 + 0.3;
+    rainContainer.appendChild(raindrop);
+  }
+}
+
+function createLightning() {
+  lightningEl.classList.add("flash");
+  setTimeout(() => {
+    lightningEl.classList.remove("flash");
+  }, 300);
+}
+
+let lightningTimeout;
+function startLightning() {
+  if (lightningTimeout) clearTimeout(lightningTimeout);
+  function randomLightning() {
+    createLightning();
+    lightningTimeout = setTimeout(randomLightning, Math.random() * 8000 + 5000);
+  }
+  lightningTimeout = setTimeout(randomLightning, 3000);
+}
+function stopLightning() {
+  if (lightningTimeout) clearTimeout(lightningTimeout);
 }
 
 // Calendar data
@@ -25,7 +82,6 @@ const lastDayDate = "2026-01-30";
 const months = [
   { year: 2025, month: 11, name: "December 2025", days: 31, startDay: 1 },
   { year: 2026, month: 0, name: "January 2026", days: 31, startDay: 4 },
-  { year: 2026, month: 1, name: "February 2026", days: 28, startDay: 0 },
 ];
 
 let currentMonthIndex = 0;
@@ -171,7 +227,7 @@ const daysLeft = calculateOfficeDays();
 
 countdownEl.textContent = daysLeft;
 
-const messages = [
+const happyMessages = [
   "Cherish every single moment! 💝",
   "Make these days unforgettable! ✨",
   "Time flies when you're having fun! 🦋",
@@ -179,26 +235,67 @@ const messages = [
   "Let's make memories! 🎨",
 ];
 
-if (daysLeft === 0) {
-  messageEl.textContent = "Today is the last day! Make it count! 🎉";
-} else {
-  messageEl.textContent = messages[Math.floor(Math.random() * messages.length)];
-}
+const sadMessages = [
+  "Time slips away like rain...",
+  "Every moment matters now...",
+  "The storm reminds us nothing lasts forever...",
+  "Treasuring these final days...",
+  "Soon only memories will remain...",
+];
 
 // Initialize calendars
 renderCalendars();
-
+let sadInterval = null;
+let heartInterval = null;
 // Floating hearts animation
-function createHeart() {
+function createFloatingEmojis() {
   const heart = document.createElement("div");
-  heart.className = "hearts";
-  heart.textContent = ["💖", "💝", "✨", "⭐", "🌟"][
-    Math.floor(Math.random() * 5)
-  ];
+  heart.className = "floaters";
+  const happyEmojis = ["💖", "💝", "✨", "😍"];
+  const sadEmojis = ["🥹", "🌩️", "😢", "🌧️"];
+
+  const emojis = happyMood ? happyEmojis : sadEmojis;
+  heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
   heart.style.left = Math.random() * 100 + "%";
   document.body.appendChild(heart);
 
   setTimeout(() => heart.remove(), 6000);
 }
 
-setInterval(createHeart, 2000);
+setInterval(createFloatingEmojis, 1500);
+
+// --- Mood toggle logic ---
+let happyMood = true;
+function updateMood() {
+  if (happyMood) {
+    starsContainer.style.display = "";
+    stormContainer.style.display = "none";
+    toggleFace.textContent = "🙂";
+    createStars();
+    stopLightning();
+    if (daysLeft === 0) {
+      messageEl.textContent = "Today is the last day! Make it count! 🎉";
+    } else {
+      messageEl.textContent =
+        happyMessages[Math.floor(Math.random() * happyMessages.length)];
+    }
+  } else {
+    starsContainer.style.display = "none";
+    stormContainer.style.display = "";
+    toggleFace.textContent = "😭";
+    createClouds();
+    createRain();
+    startLightning();
+    if (daysLeft === 0) {
+      messageEl.textContent = "Today is the last day... farewell.";
+    } else {
+      messageEl.textContent =
+        sadMessages[Math.floor(Math.random() * sadMessages.length)];
+    }
+  }
+}
+toggleMood.addEventListener("click", () => {
+  happyMood = !happyMood;
+  updateMood();
+});
+updateMood();

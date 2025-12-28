@@ -4,15 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Days Left to See You 💫</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
     <div class="stars" id="stars"></div>
+    <div class="storm-container" id="stormContainer" style="display: none">
+      <div class="clouds" id="clouds"></div>
+      <div class="rain" id="rain"></div>
+      <div class="lightning" id="lightning"></div>
+    </div>
 
     <div class="container">
       <div class="card">
         <div class="card-content">
-          <div class="header-title">Counting Down Together</div>
+          <div class="toggle-mood" id="toggleMood" title="Toggle mood">
+            <span class="toggle-face" id="toggleFace">🙂</span>
+          </div>
+          <div class="header-title">Counting Down</div>
+          <!-- <div class="header-title">Counting Down Together</div> -->
           <h1>You Get To See Me For</h1>
           <div class="countdown-number" id="countdown">0</div>
           <div class="days-label">Days</div>
@@ -61,6 +70,6 @@
       </div>
     </div>
 
-    <script src="main.js"></script>
+    <script src="/main.js"></script>
   </body>
 </html>
