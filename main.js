@@ -431,14 +431,14 @@ function startMessageRotation() {
       } else {
         messageEl.textContent = sadMessages[Math.floor(Math.random() * sadMessages.length)];
       }
-    }, 300); // Halfway through the 600ms animation
+    }, 700); // Halfway through the 600ms animation
     
     // Remove animation class after it completes
     setTimeout(() => {
       messageEl.classList.remove('message-changing');
-    }, 600);
+    }, 1400);
     
-  }, 5000);
+  }, 8000);
 }
 
 function stopMessageRotation() {
