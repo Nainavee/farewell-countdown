@@ -27,13 +27,13 @@
 
   --star-color: #ffd700;
   --heart-color: #ff6b9d;
-  --weekend-bg: rgba(255, 107, 157, 0.15);
-  --holiday-bg: rgba(255, 193, 7, 0.2);
-  --wfh-bg: rgba(103, 58, 183, 0.2);
-  --leave-bg: rgba(76, 175, 80, 0.2);
-  --office-bg: rgba(33, 150, 243, 0.15);
+  --weekend-bg: rgba(255, 107, 157, 0.45);
+  --holiday-bg: rgba(255, 193, 7, 0.4);
+  --wfh-bg: rgba(103, 58, 183, 0.6);
+  --leave-bg: rgba(76, 175, 80, 0.5);
+  --office-bg: rgba(33, 150, 243, 0.5);
   --past-bg: rgba(158, 158, 158, 0.1);
-  --last-day-bg: rgba(255, 64, 129, 0.3);
+  --last-day-bg: rgba(255, 64, 129, 0.4);
 
   /* ...existing variables... */
   --rain-color: rgba(180, 180, 200, 0.6);
@@ -62,13 +62,13 @@
   --sad-header-gradient: linear-gradient(135deg, #5a5a5a 0%, #3a3a3a 100%);
   --sad-message-bg: rgba(40, 40, 40, 0.6);
   --sad-message-border: rgba(100, 100, 100, 0.25);
-  --sad-weekend-bg: rgba(70, 70, 70, 0.35);
-  --sad-holiday-bg: rgba(80, 80, 80, 0.4);
-  --sad-wfh-bg: rgba(60, 60, 70, 0.35);
-  --sad-leave-bg: rgba(75, 75, 75, 0.35);
-  --sad-office-bg: rgba(90, 90, 100, 0.3);
-  --sad-past-bg: rgba(50, 50, 50, 0.25);
-  --sad-last-day-bg: rgba(100, 100, 110, 0.45);
+  --sad-weekend-bg: rgba(170, 110, 140, 0.42);
+  --sad-holiday-bg: rgba(190, 170, 110, 0.48);
+  --sad-wfh-bg: rgba(130, 115, 170, 0.52);
+  --sad-leave-bg: rgba(115, 160, 125, 0.48);
+  --sad-office-bg: rgba(100, 145, 185, 0.48);
+  --sad-past-bg: rgba(75, 75, 75, 0.32);
+  --sad-last-day-bg: rgba(200, 110, 145, 0.62);
   --sad-calendar-container-bg: rgba(30, 30, 30, 0.5);
   --sad-calendar-container-border: rgba(100, 100, 100, 0.25);
   --sad-calendar-nav-button-bg: rgba(70, 70, 70, 0.4);
@@ -612,7 +612,7 @@ body.light-mode .emoji-day {
     width: 40px;
     height: 40px;
     top: 16px;
-    left: 85px; /* Changed from 20px to 100px */
+    left: 75px; /* Changed from 20px to 100px */
     font-size: 20px;
   }
 
@@ -940,8 +940,8 @@ h1 {
 
 .subtitle {
   color: var(--text-secondary);
-  font-size: 16px;
-  margin-bottom: 40px;
+  font-size: 12px;
+  margin-bottom: 10px;
   opacity: 0.9;
 }
 
@@ -1031,7 +1031,7 @@ h1 {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 }
 
 .month-name {
@@ -1229,6 +1229,25 @@ h1 {
   background: var(--last-day-bg);
 }
 
+body.sad-mode .legend-box.office {
+  background: var(--sad-office-bg);
+}
+body.sad-mode .legend-box.weekend {
+  background: var(--sad-weekend-bg);
+}
+body.sad-mode .legend-box.holiday {
+  background: var(--sad-holiday-bg);
+}
+body.sad-mode .legend-box.wfh {
+  background: var(--sad-wfh-bg);
+}
+body.sad-mode .legend-box.leave {
+  background: var(--sad-leave-bg);
+}
+body.sad-mode .legend-box.last-day {
+  background: var(--sad-last-day-bg);
+}
+
 .floaters {
   position: fixed;
   bottom: -50px;
@@ -1272,7 +1291,7 @@ h1 {
   .calendar-header {
     flex-direction: row;
     gap: 0;
-    margin-bottom: 25px;
+    margin-bottom: 15px;
     align-items: center;
     justify-content: space-between;
   }
@@ -1294,7 +1313,7 @@ h1 {
   }
   .legend {
     gap: 15px;
-    margin-top: 25px;
+    margin-top: 5px;
   }
   .legend-item {
     font-size: 13px;
@@ -1317,14 +1336,14 @@ h1 {
   }
   .countdown-number {
     font-size: 50px;
-    margin: 20px 0;
+    margin: 10px 0;
   }
   h1 {
     font-size: 22px;
   }
   .days-label {
     font-size: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
   .calendar-grid {
     gap: 5px;
@@ -1334,7 +1353,7 @@ h1 {
   }
   .message {
     font-size: 15px;
-    margin: 20px 0;
+    margin: 10px 0;
   }
   .legend {
     gap: 10px;
@@ -1349,7 +1368,7 @@ h1 {
     padding: 10px;
   }
   .footer {
-    margin-top: 20px;
+    margin-top: 10px;
   }
 }
 
@@ -1357,7 +1376,7 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .small-toggle {
