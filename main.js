@@ -162,7 +162,7 @@ const wfhDays = new Set([
   "2026-01-28",
   "2026-01-29",
 ]);
-const leaveDays = new Set(["2026-01-02", "2026-01-05", "2026-01-21"]);
+const leaveDays = new Set(["2026-01-02", "2026-01-15", "2026-01-21","2026-01-20","2026-01-16"]);
 const lastDayDate = "2026-01-30";
 
 const months = [
@@ -170,7 +170,7 @@ const months = [
   { year: 2026, month: 0, name: "January 2026", days: 31, startDay: 4 },
 ];
 
-let currentMonthIndex = 0;
+let currentMonthIndex = 1;
 
 function isWeekend(date) {
   const day = date.getDay();
