@@ -31,6 +31,8 @@
   --holiday-bg: rgba(255, 193, 7, 0.4);
   --wfh-bg: rgba(103, 58, 183, 0.6);
   --leave-bg: rgba(76, 175, 80, 0.5);
+  --ooo-bg: #1e060480;
+  /* --ooo-bg: rgba(42, 39, 34, 0.5); */
   --office-bg: rgba(33, 150, 243, 0.5);
   --past-bg: rgba(158, 158, 158, 0.1);
   --last-day-bg: rgba(255, 64, 129, 0.4);
@@ -66,6 +68,7 @@
   --sad-holiday-bg: rgba(190, 170, 110, 0.48);
   --sad-wfh-bg: rgba(130, 115, 170, 0.52);
   --sad-leave-bg: rgba(115, 160, 125, 0.48);
+  --sad-ooo-bg: rgba(80, 80, 80, 0.4);
   --sad-office-bg: rgba(100, 145, 185, 0.48);
   --sad-past-bg: rgba(75, 75, 75, 0.32);
   --sad-last-day-bg: rgba(200, 110, 145, 0.62);
@@ -140,6 +143,9 @@ body.sad-mode .day-cell.leave {
   background: var(--sad-leave-bg);
 }
 
+body.sad-mode .day-cell.ooo {
+  background: var(--sad-ooo-bg);
+} 
 body.sad-mode .day-cell.office {
   background: var(--sad-office-bg);
   border: 2px solid rgba(100, 110, 120, 0.3);
@@ -1207,6 +1213,9 @@ h1 {
   background: var(--leave-bg);
 }
 
+.day-cell.ooo {
+  background: var(--ooo-bg);
+} 
 .day-cell.office {
   background: var(--office-bg);
   border: 2px solid var(--calendar-day-office-border);
@@ -1266,6 +1275,9 @@ h1 {
 .legend-box.leave {
   background: var(--leave-bg);
 }
+.legend-box.ooo {
+  background: var(--ooo-bg);
+} 
 .legend-box.last-day {
   background: var(--last-day-bg);
 }
@@ -1285,6 +1297,9 @@ body.sad-mode .legend-box.wfh {
 body.sad-mode .legend-box.leave {
   background: var(--sad-leave-bg);
 }
+body.sad-mode .legend-box.ooo {
+  background: var(--sad-ooo-bg);
+} 
 body.sad-mode .legend-box.last-day {
   background: var(--sad-last-day-bg);
 }
