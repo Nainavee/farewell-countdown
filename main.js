@@ -8,6 +8,39 @@ const lightningEl = document.getElementById("lightning");
 const titleEl = document.querySelector("h1");
 const subtitleEl = document.querySelector(".subtitle");
 
+// Modal functionality - Add this to your main.js file
+
+// Get modal elements
+const modalOverlay = document.getElementById('modalOverlay');
+const modalBtnPrimary = document.getElementById('modalBtnPrimary');
+const modalBtnSecondary = document.getElementById('modalBtnSecondary');
+
+// Function to close modal
+function closeModal() {
+  modalOverlay.classList.add('hidden');
+  setTimeout(() => {
+    modalOverlay.style.display = 'none';
+  }, 300); // Wait for fade out animation
+}
+
+// Add click event listeners to both buttons
+modalBtnPrimary.addEventListener('click', closeModal);
+modalBtnSecondary.addEventListener('click', closeModal);
+
+// Optional: Close modal when clicking outside of it
+modalOverlay.addEventListener('click', (e) => {
+  if (e.target === modalOverlay) {
+    closeModal();
+  }
+});
+
+// Optional: Close modal with Escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && !modalOverlay.classList.contains('hidden')) {
+    closeModal();
+  }
+});
+
 function createStars() {
   starsContainer.innerHTML = "";
   for (let i = 0; i < 100; i++) {
@@ -204,6 +237,7 @@ function calculateOfficeDays() {
 }
 
 function createCalendar(monthData) {
+  console.log("Creating calendar");
   const slide = document.createElement("div");
   slide.className = "calendar-slide";
 
@@ -373,6 +407,7 @@ function renderCalendars() {
 }
 
 function updateCalendarView() {
+  console.log("HERER");
   const slider = document.getElementById("calendarSlider");
   const monthName = document.getElementById("monthName");
   const prevBtn = document.getElementById("prevBtn");
