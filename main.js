@@ -156,13 +156,13 @@ scheduleLightning();
 const today = new Date();
 const holidays = new Set(["2026-01-01", "2026-01-14", "2026-01-26"]);
 const wfhDays = new Set([
-  "2026-01-22",
+  "2026-01-20",
   "2026-01-23",
   "2026-01-27",
   "2026-01-28",
   "2026-01-29",
 ]);
-const leaveDays = new Set(["2026-01-02", "2026-01-15", "2026-01-21","2026-01-20","2026-01-16"]);
+const leaveDays = new Set(["2026-01-02", "2026-01-15", "2026-01-05","2026-01-12","2026-01-22"]);
 const lastDayDate = "2026-01-30";
 
 const months = [
